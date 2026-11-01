@@ -1,0 +1,147 @@
+body {
+    margin: 0;
+    overflow: hidden;
+}
+
+.modal-polaroid {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-polaroid.active {
+    display: flex;
+}
+
+.polaroid-card {
+    background-color: #fff;
+    padding: 16px 16px 24px 16px;
+    width: 280px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    transform: rotate(-2deg);
+    position: relative;
+    text-align: center;
+}
+
+.polaroid-photo {
+    width: 100%;
+    height: 220px;
+    background-color: #222;
+    object-fit: cover;
+    border: 1px solid #ddd;
+    transform: scaleX(-1);
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #ff4d4d;
+    color: white;
+    border: 2px solid white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 8; 
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.close-btn:hover {
+    background: #e03131;
+    transform: scale(1.1);
+}
+#btnGit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #24292e; 
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 50px; 
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    outline: none;
+    margin-top: 10px;
+}
+
+#btnGit:hover {
+    background-color: #2f363d;
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 8px 25px rgba(36, 41, 46, 0.4);
+}
+
+#btnGit:active {
+    transform: translateY(-1px) scale(0.98);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+#modalProjectes .polaroid-card {
+    width: 85vw;
+    max-width: 900px;
+    max-height: 85vh;
+    overflow-y: auto; 
+    transform: rotate(0deg); 
+    padding: 24px;
+}
+
+#modalProjectes h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+#modalProjectes .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    justify-items: center;
+}
+
+#modalProjectes .project-item {
+    background: #fdfdfd;
+    border: 1px solid #eee;
+    padding: 12px;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#modalProjectes .project-item h3 {
+    margin: 10px 0 5px 0;
+    font-size: 18px;
+}
+
+#modalProjectes .project-item p {
+    font-size: 14px;
+    color: #555;
+    margin: 0 0 10px 0;
+}
+
+#modalProjectes .polaroid-photo {
+    height: 160px; 
+}

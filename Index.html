@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="ca">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+
+
+    <title>Portafolis 3D de Dia</title>
+
+
+    <!-- A-Frame -->
+    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+   
+ 
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.5.4/dist/aframe-extras.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+
+<body>
+
+
+ 
+    <a-scene renderer="colorManagement: true; physicallyCorrectLights: true" background="color: #4FC3F7">
+
+
+        <!-- ================================================= -->
+        <!-- GESTIÓ D'ACTIUS (ASSETS)                          -->
+        <!-- ================================================= -->
+        <a-assets>
+            <video id="miVideo" autoplay loop crossorigin="anonymous" src="musica.mp4" muted playsinline></video>
+            <a-asset-item id="camara" src="GLBs/camara.glb"></a-asset-item>
+            <a-asset-item id="polaroid" src="GLBs/polaroid_aboutme.glb"></a-asset-item>
+            <a-asset-item id="polaroid2" src="GLBs/polaroidContacte.glb"></a-asset-item>
+            <a-asset-item id="polaroid3" src="GLBs/polaroidGitHub.glb"></a-asset-item>
+            <a-asset-item id="polaroid4" src="GLBs/polaroidProjectes.glb"></a-asset-item>
+            <a-asset-item id="polaroid5" src="GLBs/polaroidPachacho.glb"></a-asset-item>
+            <a-asset-item id="aboutMe" src="GLBs/txtAboutMe.glb"></a-asset-item>
+            <a-asset-item id="contacte" src="GLBs/txtContacte.glb"></a-asset-item>
+            <a-asset-item id="GitHub" src="GLBs/txtGitHub.glb"></a-asset-item>
+            <a-asset-item id="projectes" src="GLBs/txtProjectes.glb"></a-asset-item>
+            <video 
+                id="fons" 
+                src="Media/fons2.mov" 
+                autoplay loop muted playsinline webkit-playsinline crossorigin="anonymous">
+            </video>
+        </a-assets>
+
+
+
+        <a-sky src="#fons" rotation="0 -90 0"></a-sky>
+
+
+        <!-- ================================================= -->
+        <!-- IL·LUMINACIÓ (NOVA IL·LUMINACIÓ DE DIA)           -->
+        <!-- ================================================= -->
+
+
+        <!-- 1. Llum ambiental brillant i neutra (base clara) -->
+        <a-light type="ambient" color="#FFFFFF" intensity="1.5">
+        </a-light>
+
+
+        <!-- 2. Llum direccional (com el Sol), alta i frontal -->
+        <a-light type="directional" color="#FFFACD" intensity="2.0" position="-5 10 10">
+        </a-light>
+
+
+        <!-- 3. Llum blava central tènue (per al color de fons) -->
+        <a-light type="point" position="0 5 0" color="#67d9ff" intensity="2" distance="15">
+        </a-light>
+
+        <a-light id="tempo" type="spot" position="-0.478 4.645 0.852" color="#ee2b2b" intensity="0" distance="15" decay="5" angle="80" animation="property: intensity; from: 5; to: 0; dur: 250; dir: alternate; loop: true; startEvents: activarLuz">
+        </a-light>
+
+        <a-light id="flashazo" type="point" position="-0.859 4.541 0.685 " color="#ffffff" intensity="0" distance="15">
+        </a-light>
+
+
+
+
+       
+        <!-- ================================================= -->
+        <!-- GRAELLA                                            -->
+        <!-- ================================================= -->
+
+
+        <a-entity id="graella"></a-entity>
+
+
+
+
+
+
+        <!-- ================================================= -->
+        <!-- MODEL GLB ANIMAT (AMB ESCALA CORRECTA)            -->
+        <!-- ================================================= -->
+
+
+
+       <!-- <a-plane src="#miVideo" width="3.2" height="2" position="0 4.2 -0.8"></a-plane>-->
+        <a-gltf-model
+            src="#camara"
+            position="0 3 0"
+            scale="0.5 0.5 0.5"
+            animation-mixer>
+        </a-gltf-model>
+
+        <a-gltf-model
+            id="polaroidAboutMe"
+            src="#polaroid"
+            revelar-retol="target: #txtAboutMe"
+            position="2.173 2.120 -0.133"
+            rotation="27.643 40.932 17.056"
+            scale="0.08 0.08 0.08"
+            animation="property: position; from: 2.173 2.120 -0.133; to: 2.250 2.450 -0.050; dur: 2300; dir: alternate; loop: true; easing: easeInOutSine"
+            animation__mouseenter="property: scale; from: 0.08 0.08 0.08; to: 0.1 0.1 0.1; startEvents: mouseenter; dur: 200"
+            animation__mouseleave="property: scale; from: 0.1 0.1 0.1; to: 0.08 0.08 0.08; startEvents: mouseleave; dur: 200">
+        </a-gltf-model>
+
+        <a-gltf-model
+            id="polaroidContacte"
+            revelar-retol="target: #txtContacte"
+            src="#polaroid2"
+            position="-3.148 4.373 -0.133"
+            rotation="27.643 80.511 17.056"
+            scale="0.08 0.08 0.08"
+            animation="property: position; from: -3.348 4.200 -0.200; to: -3.450 4.820 -0.080; dur: 2900; dir: alternate; loop: true; easing: easeInOutQuad"
+            animation__mouseenter="property: scale; from: 0.08 0.08 0.08; to: 0.1 0.1 0.1; startEvents: mouseenter; dur: 200"
+            animation__mouseleave="property: scale; from: 0.1 0.1 0.1; to: 0.08 0.08 0.08; startEvents: mouseleave; dur: 200">
+        </a-gltf-model>
+
+        <a-gltf-model 
+            id="polaroidGitHub"
+            revelar-retol="target: #txtGitHub"
+            src="#polaroid3" 
+            position="2.173 4.400 -0.133" 
+            rotation="27.643 40.932 17.056" 
+            scale="0.08 0.08 0.08" 
+            animation="property: position; from: 2.173 4.350 -0.100; to: 2.500 4.750 -0.220; dur: 3100; dir: alternate; loop: true; easing: easeInOutSine"
+            animation__mouseenter="property: scale; from: 0.08 0.08 0.08; to: 0.1 0.1 0.1; startEvents: mouseenter; dur: 200"
+            animation__mouseleave="property: scale; from: 0.1 0.1 0.1; to: 0.08 0.08 0.08; startEvents: mouseleave; dur: 200">
+        </a-gltf-model>
+
+        <a-gltf-model 
+            id="polaroidProjecte"
+            revelar-retol="target: #txtProjecte"
+            src="#polaroid4" 
+            position="-3.148 2.120 -0.133" 
+            rotation="27.643 80.511 17.056" 
+            scale="0.08 0.08 0.08" 
+            animation="property: position; from: -3.148 2.050 -0.050; to: -3.220 2.420 -0.180; dur: 2600; dir: alternate; loop: true; easing: easeInOutSine"
+            animation__mouseenter="property: scale; from: 0.08 0.08 0.08; to: 0.1 0.1 0.1; startEvents: mouseenter; dur: 200"
+            animation__mouseleave="property: scale; from: 0.1 0.1 0.1; to: 0.08 0.08 0.08; startEvents: mouseleave; dur: 200">
+        </a-gltf-model>
+        <a-gltf-model 
+            id="polaroidOut"
+            src="#polaroid5" 
+            position="0 3 0" 
+            rotation="15.226 52.810 -2.858" 
+            scale="0 0 0" 
+            visible="false">
+        </a-gltf-model>
+        <a-gltf-model
+            src="#aboutMe"
+            position="-0.028 5.773 -0.133"
+            rotation="90 0 0"
+            scale="0.02 0.02 0.02"
+            visible="false"
+            id="txtAboutMe">
+        </a-gltf-model>
+        <a-gltf-model
+            src="#contacte"
+            position="-0.028 5.773 -0.133"
+            rotation="90 0 0"
+            scale="0.02 0.02 0.02"
+            visible="false"
+            id="txtContacte">
+        </a-gltf-model>
+        <a-gltf-model
+            src="#GitHub"
+            position="-0.028 5.773 -0.133"
+            rotation="90 0 0"
+            scale="0.02 0.02 0.02"
+            visible="false"
+            id="txtGitHub"
+            >
+        </a-gltf-model>
+        <a-gltf-model
+            src="#projectes"
+            position="-0.028 5.773 -0.133"
+            rotation="90 0 0"
+            scale="0.02 0.02 0.02"
+            visible="false"
+            id="txtProjecte">
+        </a-gltf-model>
+
+        
+
+        <a-cylinder position="-0.946 3.958 0.592" radius="0.5" height="2" color="#FF0000" rotation="90.000 -180 -180" scale="0.261 0.054 0.261" 
+            animation__mouseenter="property: material.color; from: #FF0000; to: #FFFF00; startEvents: mouseenter; dur: 200"
+            animation__mouseleave="property: material.color; from: #FFFF00; to: #FF0000; startEvents: mouseleave; dur: 200"
+            animation__llamatiu="property: color; from: #FF0000; to: #100000; dur: 500; dir: alternate; loop: true">
+        </a-cylinder>
+
+        <a-cylinder 
+            position="0 2 -1.5" 
+            radius="4" 
+            height="0.05" 
+            color="#FFF9E5" 
+            material="transparent: true; opacity: 0.7; roughness: 0.1; metalness: 0.9; emissive: #F9DB94; emissiveIntensity: 0.5">
+        </a-cylinder>
+
+        <!-- ================================================= -->
+        <!-- CÀMERA                                            -->
+        <!-- ================================================= -->
+
+
+        <a-camera position="0 4.5 5.5" rotation="-25 0 0" look-controls="pointerLockEnabled: false" wasd-controls="enabled: false" camera-limitada="angle: 40; distancia: 1.5">
+            <a-entity cursor="rayOrigin: mouse" raycaster="objects: [gltf-model], a-cylinder"></a-entity>
+        </a-camera>
+
+
+
+
+    </a-scene>
+    <div id="modalAboutMe" class="modal-polaroid">
+        <div class="polaroid-card">
+            <button class="close-btn">&times;</button>    
+            <img class="polaroid-photo" src="Media/about.jpg" alt="About Me">
+            
+            <h3>About Me 👍</h3>
+            
+            <div style="background: #fdfaf6; padding: 12px 16px; border-radius: 16px; margin-top: 10px; border: 1px solid #f3ebe1;">
+                <p style="margin: 0; color: #555; font-family: 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.5; text-align: center;">
+                    Hi, I'm Adrià Clemente, a student of DAM. This is a little project to show my work. I'm 19 years old and looking really forward to continuing my projects and developing some good-looking things.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalContacte" class="modal-polaroid">
+        <div class="polaroid-card">
+            <button class="close-btn">&times;</button>    
+            <img class="polaroid-photo" src="Media/contacte.jpg" alt="Contact" >
+            <h3>Contact Me</h3>
+            
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px; font-family: 'Segoe UI', sans-serif;">
+
+                <a href="mailto:25adria.clemente@inscastellet.cat" style="text-decoration: none; color: #555; background: #fff0f3; padding: 10px 15px; border-radius: 20px; font-size: 14px; font-weight: 500; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s;">
+                    ✉️ 25adria.clemente@inscastellet.cat
+                </a>
+                
+                <a href="https://instagram.com/_aclementee_" target="_blank" style="text-decoration: none; color: #fff; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); padding: 10px 15px; border-radius: 20px; font-size: 14px; font-weight: 500; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+                    ✨ @_aclementee_
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalGitHub" class="modal-polaroid">
+        <div class="polaroid-card">
+            <button class="close-btn">&times;</button>    
+            <img class="polaroid-photo" src="Media/GitHub.png" alt="GitHub">
+            <h3>GitHub</h3>
+            <button id="btnGit" onclick="window.open('https://github.com/AdriaClemente070', '_blank')">Follow my GitHub projects!!</button>
+        </div>
+    </div>
+
+    <div id="modalProjectes" class="modal-polaroid">
+        <div class="polaroid-card modal-projects-content">
+            <button class="close-btn">&times;</button>
+            <h2>Mis Proyectos</h2>
+            
+            <div class="projects-grid">
+                <div class="project-item">
+                    <video class="polaroid-photo" rotation="0 180 0" src="https://drive.google.com/file/d/11mbmKJ3Vfl8nwQHWk_kOwLq0yVpzvTR7/preview" material="side: double" autoplay loop muted playsinline controls style="transform: rotateY(180deg) scaleX(-1);"></video>
+                    <h3>GameLand</h3>
+                    <p>Small unity experience, used to learn the unity basics.</p>
+                    <a href="https://github.com/AdriaClemente070" id="btnGit">GitHub</a>
+                </div>
+
+                <div class="project-item">
+                    <img class="polaroid-photo" src="Media/obra.png" alt="Proyecto 2">
+                    <h3>Under Construction</h3>
+                    <p>Hi!!</p>
+                    <a href="https://github.com/AdriaClemente070" id="btnGit">GitHub</a>
+                </div>
+
+                <div class="project-item">
+                    <img class="polaroid-photo" src="Media/obra.png" alt="Proyecto 3">
+                    <h3>Under Construction</h3>
+                    <p>Hi!!</p>
+                    <a href="https://github.com/AdriaClemente070" id="btnGit">GitHub</a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('click', function() {
+            const fonsVideo = document.getElementById('fons');
+            if (fonsVideo.paused) {
+                fonsVideo.play().catch(e => console.log("Error reproduint fons:", e));
+            }
+            
+            const miVideo = document.getElementById('miVideo');
+            if (miVideo && miVideo.paused) {
+                miVideo.play().catch(e => console.log("Error reproduint miVideo:", e));
+            }
+        }, { once: true });
+
+        document.querySelector('a-scene').addEventListener('loaded', function ()  {
+            const esperar = ms => new Promise(resolve => setTimeout(resolve, ms));
+            var audio = new Audio('Media/abrirFoto.mp3');
+
+            const cilindro = document.querySelector('a-cylinder');
+            const luzTempo = document.getElementById('tempo');
+            const flashito = document.getElementById('flashazo');
+            const foto = document.getElementById('polaroidOut');
+
+            cilindro.addEventListener('click', async function () {
+                const pampalluges = luzTempo.components['animation'];
+                luzTempo.setAttribute('intensity', 5);
+                luzTempo.emit('activarLuz'); 
+
+                //setTimeout(5);
+                await esperar(5000);
+
+                pampalluges.pauseAnimation();
+                luzTempo.setAttribute('intensity', 0);
+
+                flashito.setAttribute('intensity', 10000);
+                audio.play();
+                await esperar(600);
+                flashito.setAttribute('intensity', 0);
+
+                foto.setAttribute('visible', 'true');
+                foto.setAttribute('animation', {
+                    property: 'position',
+                    from: '0 4 0',         
+                    to: '-0.334 1.274 1.993', 
+                    dur: 1500,
+                    easing: 'easeOutQuad'
+                });
+                foto.setAttribute('animation__scale', {
+                    property: 'scale',
+                    from: '0.01 0.01 0.01',
+                    to: '0.08 0.08 0.08',
+                    dur: 1500,
+                    easing: 'easeOutQuad'
+                });
+                
+            });
+            
+
+            const polaroids = [
+        { id: 'polaroidAboutMe', modalId: 'modalAboutMe' },
+        { id: 'polaroidContacte', modalId: 'modalContacte' },
+        { id: 'polaroidGitHub', modalId: 'modalGitHub' },
+        { id: 'polaroidProjecte', modalId: 'modalProjectes' }
+    ];
+
+    polaroids.forEach(item => {
+        const polaroidEl = document.getElementById(item.id);
+        const modalEl = document.getElementById(item.modalId);
+        var audioF = new Audio('Media/obturador.mp3');
+
+        if (polaroidEl && modalEl) {
+            // Abrir modal al hacer clic en la polaroid
+            polaroidEl.addEventListener('click', function () {
+                modalEl.classList.add('active');
+                audioF.play();
+            });
+
+            // Cerrar con el botón de cierre (X)
+            const closeBtn = modalEl.querySelector('.close-btn');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function () {
+                    modalEl.classList.remove('active');
+                });
+            }
+
+            // Cerrar si se hace clic fuera del contenido del modal
+            modalEl.addEventListener('click', function (e) {
+                if (e.target === modalEl) {
+                    modalEl.classList.remove('active');
+                }
+            });
+        }
+    });
+});
+
+
+        
+
+        AFRAME.registerComponent('revelar-retol', {
+            schema: {
+                target: { type: 'selector' } // Selecciona el rètol que es mostrarà
+            },
+            init: function () {
+                const targetEl = this.data.target;
+
+
+                // Quan el ratolí entra a l'objecte
+                this.el.addEventListener('mouseenter', () => {
+                    if (targetEl) targetEl.setAttribute('visible', 'true');
+                });
+
+
+                // Quan el ratolí surt de l'objecte
+                this.el.addEventListener('mouseleave', () => {
+                    if (targetEl) targetEl.setAttribute('visible', 'false');
+                });
+            }
+        });
+
+         AFRAME.registerComponent('camera-limitada', {
+            schema: {
+                angle: {
+                    type: 'number',
+                    default: 30
+                },
+
+
+                distancia: {
+                    type: 'number',
+                    default: 1.5
+                }
+            },
+
+
+            init: function () {
+                // Desa la posició inicial de la càmera
+                this.posicioInicial =
+                    this.el.object3D.position.clone();
+
+
+                // Desa la rotació inicial
+                const rotacioInicial =
+                    this.el.getAttribute('rotation');
+
+
+                this.rotacioXInicial = rotacioInicial.x;
+                this.rotacioYInicial = rotacioInicial.y;
+            },
+
+
+            tick: function () {
+                const angle = this.data.angle;
+                const rotacio = this.el.getAttribute('rotation');
+
+
+                const minX = this.rotacioXInicial - angle;
+                const maxX = this.rotacioXInicial + angle;
+
+
+                const minY = this.rotacioYInicial - angle;
+                const maxY = this.rotacioYInicial + angle;
+
+
+                const xLimitat = Math.max(
+                    minX,
+                    Math.min(maxX, rotacio.x)
+                );
+
+
+                const yLimitat = Math.max(
+                    minY,
+                    Math.min(maxY, rotacio.y)
+                );
+
+
+                if (
+                    Math.abs(rotacio.x - xLimitat) > 0.01 ||
+                    Math.abs(rotacio.y - yLimitat) > 0.01
+                ) {
+                    this.el.setAttribute('rotation', {
+                        x: xLimitat,
+                        y: yLimitat,
+                        z: rotacio.z
+                    });
+                }
+                const posicio = this.el.object3D.position;
+                const inicial = this.posicioInicial;
+
+
+                const dx = posicio.x - inicial.x;
+                const dy = posicio.y - inicial.y;
+                const dz = posicio.z - inicial.z;
+
+
+                const distanciaActual = Math.sqrt(
+                    dx * dx + dy * dy + dz * dz
+                );
+
+
+                const distanciaMaxima = this.data.distancia;
+
+
+                if (distanciaActual > distanciaMaxima) {
+                    const factor =
+                        distanciaMaxima / distanciaActual;
+
+
+                    posicio.x = inicial.x + dx * factor;
+                    posicio.y = inicial.y + dy * factor;
+                    posicio.z = inicial.z + dz * factor;
+                }
+            }
+        });
+
+
+        
+
+
+        // =====================================================
+        // GRAELLA
+        // =====================================================
+
+
+        const graella = document.querySelector("#graella");
+
+
+        const mida = 40;
+        const separacio = 1;
+
+
+        for (
+            let i = -mida / 2;
+            i <= mida / 2;
+            i += separacio
+        ) {
+
+
+            // -----------------------------------------------
+            // Línies verticals
+            // -----------------------------------------------
+
+
+            const liniaX = document.createElement("a-box");
+
+
+            liniaX.setAttribute(
+                "position",
+                `${i} 0.01 0`
+            );
+
+
+            liniaX.setAttribute(
+                "width",
+                "0.008"
+            );
+
+
+            liniaX.setAttribute(
+                "height",
+                "0.008"
+            );
+
+
+            liniaX.setAttribute(
+                "depth",
+                mida
+            );
+
+
+            liniaX.setAttribute(
+                "material",
+                `
+            color: #35184d;
+            emissive: #35184d;
+            emissiveIntensity: 0.8  /* Reduïda per a una escena de dia */
+            `
+            );
+
+
+            graella.appendChild(liniaX);
+
+
+
+
+            // -----------------------------------------------
+            // Línies horitzontals
+            // -----------------------------------------------
+
+
+            const liniaZ = document.createElement("a-box");
+
+
+            liniaZ.setAttribute(
+                "position",
+                `0 0.012 ${i}`
+            );
+
+
+            liniaZ.setAttribute(
+                "width",
+                mida
+            );
+
+
+            liniaZ.setAttribute(
+                "height",
+                "0.008"
+            );
+
+
+            liniaZ.setAttribute(
+                "depth",
+                "0.008"
+            );
+
+
+            liniaZ.setAttribute(
+                "material",
+                `
+            color: #35184d;
+            emissive: #35184d;
+            emissiveIntensity: 0.8  /* Reduïda per a una escena de dia */
+            `
+            );
+
+
+            graella.appendChild(liniaZ);
+        }
+
+
+    </script>
+
+
+</body>
+
+
+</html>
